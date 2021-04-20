@@ -23,6 +23,7 @@ services:
 
   teamengine:
     image: geoserver-docker.osgeo.org/geoserver-cite:${TEAMENGINE_TAG:-teamengine_latest}
+    user: "${UID}:${GID}"
     ports:
       - 8080
     depends_on:
