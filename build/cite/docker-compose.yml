@@ -22,7 +22,8 @@ services:
     - gs_gwc_cache_dir:/var/geoserver/gwc_cache_dir:rw
 
   teamengine:
-    image: geoserver-docker.osgeo.org/geoserver-cite:${TEAMENGINE_TAG:-teamengine_latest}
+    #image: geoserver-docker.osgeo.org/geoserver-cite:${TEAMENGINE_TAG:-teamengine_latest}
+    image: agpenton/teamengine:${TEAMENGINE_TAG:-teamengine_latest}
     user: "${UID}:${GID}"
     ports:
       - 8080
