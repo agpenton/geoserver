@@ -32,9 +32,9 @@ _show_logs() {
 #  fi
 #}
 _parse_logs(){
-  grep -R $TE_LOG_DIR/s0001 "Failed"
+  glogs=$(_show_logs | grep -iv "Failed")
   local grep_exit_code=$?
-  if [ "$grep_exit_code" -ne "0" ]; then
+  if ! glogs; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
   else
