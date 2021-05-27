@@ -33,10 +33,10 @@ _show_logs() {
 #  fi
 #}
 _parse_logs(){
-  _show_logs | grep -w "Failed"
+  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
 #  grep -riv "Failed" $TE_LOG_DIR_SESSION
   local grep_exit_code=$?
-  if [ "$grep_exit_code" -eq 0 ]; then
+  if [ "$grep_exit_code" -eq "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
   else
