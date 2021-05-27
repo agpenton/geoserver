@@ -20,9 +20,20 @@ _show_logs() {
     -session=s0001
 }
 
+#_parse_logs(){
+#  _show_logs | grep -iv "Failed"
+#  local grep_exit_code=$?
+#  if [ "$grep_exit_code" == "0" ]; then
+#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+#      return 3
+#  else
+#      echo "No Failed tests found in logs" >&2
+#      return 0
+#  fi
+#}
 _parse_logs(){
-  _show_logs | grep -iv "Failed"
-  local grep_exit_code=$?
+  grep -Riv "Failed" $TE_LOG_DIR/s0001
+local grep_exit_code=$?
   if [ "$grep_exit_code" == "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
@@ -31,11 +42,6 @@ _parse_logs(){
       return 0
   fi
 }
-#_parse_logs(){
-#  grep -Riv "Failed" $TE_LOG_DIR/s0001
-#  local grep_exit_code=$?
-#  return $grep_exit_code
-#  }
 
 #_return_logs(){
 #  if ! _parse_logs; then
