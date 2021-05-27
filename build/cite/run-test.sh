@@ -41,7 +41,7 @@ _parse_logs(){
       return 0
   else
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-      return 3
+      return 1
   fi
 }
 
