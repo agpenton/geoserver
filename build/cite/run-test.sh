@@ -3,7 +3,7 @@
 # fail on error
 set -e
 
-TE_LOG_DIR="$TE_BASE/users/teamengine"
+TE_LOG_DIR="$TE_BASE/users/teamengine/"
 TE_LOG_DIR_SESSION="$TE_BASE/users/teamengine/s0001/"
 TE_FORMS_DIR="$TE_BASE/forms"
 
