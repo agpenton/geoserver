@@ -4,7 +4,6 @@
 set -e
 
 TE_LOG_DIR="$TE_BASE/users/teamengine/"
-TE_LOG_DIR_SESSION="$TE_BASE/users/teamengine/s0001/"
 TE_FORMS_DIR="$TE_BASE/forms"
 
 mkdir -p "$TE_FORMS_DIR"
@@ -21,39 +20,18 @@ _show_logs() {
     -session=s0001
 }
 
-#_parse_logs(){
-#  _show_logs | grep -w "Failed"
-#  local grep_exit_code=$?
-#  if [ "$grep_exit_code" -ne "0" ]; then
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      return 3
-#  else
-#      echo "No Failed tests found in logs" >&2
-#      return 0
-#  fi
-#}
 _parse_logs(){
   ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
 #  grep -riv "Failed" $TE_LOG_DIR_SESSION
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-      return 1
+      return 3
   else
       echo "No Failed tests found in logs" >&2
       return 0
   fi
 }
-
-#_return_logs(){
-#  if ! _parse_logs; then
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      return 3
-#  else
-#      echo "No Failed tests found in logs" >&2
-#      return 0
-#  fi
-#}
 
 _run() {
   ./test.sh \
@@ -72,7 +50,7 @@ _run() {
   fi
 
   _parse_logs
-  if [ "$?" -ne "0" ]; then
+  if [ "$?" -eq "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
   fi
