@@ -64,6 +64,8 @@ _run() {
       return 20
   fi
 
+set -x
+set -v
   _parse_logs
 #  if [ "$?" -ne "0" ]; then
 #  if [ "$rc" -eq "0" ]; then
