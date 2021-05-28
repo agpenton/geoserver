@@ -39,7 +39,7 @@ _run() {
     -source="$source" \
     -form="$form"
   local rc=$?
-  if [ "$rc" -eq "0" ]; then
+  if [ "$rc" -ne "0" ]; then
       echo "test.sh failed!" >&2
       rc=10
   fi
@@ -51,7 +51,7 @@ _run() {
   fi
 
   _parse_logs
-  if [ "$?" -eq "0" ]; then
+  if [ "$?" -ne "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
   fi
