@@ -29,6 +29,9 @@ _parse_logs(){
   if [ "$grep_exit_code" -eq "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
+  elif [ "$grep_exit_code" -eq "1" ]; then
+      echo "No Failed tests found in logs" >&2
+      return 0
   else
       echo "No Failed tests found in logs" >&2
       return 0
