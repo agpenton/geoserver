@@ -83,11 +83,10 @@ echo $rc
 echo $rc
 
 echo "Parsing the logs"
+set -x
   _parse_logs
 
-echo "The Result is $?"
   if [ "$?" -ne "0" ]; then
-#  if [ "$rc" -eq "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
   fi
