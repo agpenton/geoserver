@@ -46,16 +46,18 @@ _run() {
   fi
 
   _show_logs
-  if [ "$?" -ne "0" ]; then
+#  if [ "$?" -ne "0" ]; then
+  if [ "$rc" -ne "0" ]; then
       echo "viewlog.sh failed, I cannot tell if the tests failed or not." >&2
       return 20
   fi
 
   _parse_logs
-  if [ "$?" -ne "0" ]; then
-      echo "The log shows a failed test!" >&2
-      rc=3
-  fi
+#  if [ "$?" -ne "0" ]; then
+#  if [ "$rc" -ne "0" ]; then
+#      echo "The log shows a failed test!" >&2
+#      rc=3
+#  fi
 
   echo $rc
   return $rc
