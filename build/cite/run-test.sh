@@ -2,8 +2,8 @@
 
 # fail on error
 set -e
-set -x
-set -v
+#set -x
+#set -v
 
 TE_LOG_DIR="$TE_BASE/users/teamengine/"
 TE_FORMS_DIR="$TE_BASE/forms"
