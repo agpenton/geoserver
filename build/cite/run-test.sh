@@ -51,9 +51,9 @@ _parse_logs(){
 #  ./viewlog.sh -logdir=$TE_LOG_DIR -session=s0001 | grep -R "Failed"
 set -v
 set -x
-  grep -rw "Failed" $TE_LOG_DIR_SESSION
-  ./viewlog.sh -logdir=$TE_LOG_DIR/ -session=s0001 | grep -R "Failed"
-
+#  grep -rw "Failed" $TE_LOG_DIR_SESSION
+  ./viewlog.sh -logdir=$TE_LOG_DIR/ -session=s0001 > test.logs
+  grep -w "Failed" test.logs
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
