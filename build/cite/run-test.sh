@@ -47,7 +47,7 @@ _show_logs() {
 #  fi
 #}
 _parse_logs(){
-  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -e "Failed"
+  ./viewlog.sh -logdir=$TE_LOG_DIR -session=s0001 | grep -c "Failed"
 #  grep -riv "Failed" $TE_LOG_DIR_SESSION
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq "0" ]; then
