@@ -39,7 +39,7 @@ _run() {
     -source="$source" \
     -form="$form"
   local rc=$?
-  if [ "$rc" -ne "0" ]; then
+  if [ "$rc" -eq "0" ]; then
       echo "test.sh failed!" >&2
       rc=10
   fi
