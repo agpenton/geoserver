@@ -66,10 +66,10 @@ _run() {
 
   _parse_logs
 #  if [ "$?" -ne "0" ]; then
-#  if [ "$rc" -ne "0" ]; then
-#      echo "The log shows a failed test!" >&2
-#      rc=3
-#  fi
+  if [ "$rc" -ne "0" ]; then
+      echo "The log shows a failed test!" >&2
+      rc=3
+  fi
 
   echo $rc
   return $rc
