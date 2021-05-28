@@ -24,8 +24,8 @@ _show_logs() {
 }
 
 _parse_logs(){
-#  _show_logs | grep -w "Failed"
-  _show_logs | grep -iv "Failed"
+  _show_logs | grep -w "Failed"
+#  _show_logs | grep -iv "Failed"
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq 0 ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
@@ -56,6 +56,7 @@ echo $rc
       echo "viewlog.sh failed, I cannot tell if the tests failed or not." >&2
       return 20
   fi
+
 echo $rc
 
 echo "Parsing the logs"
