@@ -26,10 +26,10 @@ _show_logs() {
 _parse_logs(){
   _show_logs | grep -w "Failed"
   local grep_exit_code=$?
-  if [ "$grep_exit_code" -eq "0" ]; then
+  if [ "$grep_exit_code" -eq 0 ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
-  elif [ "$grep_exit_code" -eq "1" ]; then
+  elif [ "$grep_exit_code" -eq 1 ]; then
       echo "No Failed tests found in logs" >&2
       return 0
   else
