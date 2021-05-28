@@ -38,7 +38,7 @@ _parse_logs(){
   ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
 #  grep -riv "Failed" $TE_LOG_DIR_SESSION
   local grep_exit_code=$?
-  if [ "$grep_exit_code" -ne "0" ]; then
+  if [ "$grep_exit_code" -eq "0" ]; then
       echo "No Failed tests found in logs" >&2
       return 0
   else
@@ -57,6 +57,8 @@ _run() {
       rc=10
   fi
 
+echo $rc
+
   _show_logs
 #  if [ "$?" -ne "0" ]; then
   if [ "$rc" -ne "0" ]; then
@@ -66,6 +68,8 @@ _run() {
 
 #set -x
 #set -v
+echo $rc
+
   _parse_logs
 #  if [ "$?" -ne "0" ]; then
 #  if [ "$rc" -eq "0" ]; then
