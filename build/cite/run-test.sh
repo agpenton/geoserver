@@ -5,7 +5,7 @@ set -e
 #set -x
 #set -v
 
-TE_LOG_DIR="$TE_BASE/users/teamengine/"
+TE_LOG_DIR="$TE_BASE/users/teamengine"
 TE_LOG_DIR_SESSION="$TE_LOG_DIR/s0001/"
 TE_FORMS_DIR="$TE_BASE/forms"
 
