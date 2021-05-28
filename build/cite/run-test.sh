@@ -22,16 +22,28 @@ _show_logs() {
     -session=s0001
 }
 
+#_parse_logs(){
+#  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
+##  grep -riv "Failed" $TE_LOG_DIR_SESSION
+#  local grep_exit_code=$?
+#  if [ "$grep_exit_code" -eq "0" ]; then
+#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+#      return 3
+#  else
+#      echo "No Failed tests found in logs" >&2
+#      return 0
+#  fi
+#}
 _parse_logs(){
-  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
+  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Passed"
 #  grep -riv "Failed" $TE_LOG_DIR_SESSION
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq "0" ]; then
-      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-      return 3
-  else
       echo "No Failed tests found in logs" >&2
       return 0
+  else
+      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+      return 3
   fi
 }
 
