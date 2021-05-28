@@ -5,8 +5,8 @@ set -e
 #set -x
 #set -v
 
-TE_LOG_DIR="$TE_BASE/users/teamengine"
-TE_LOG_DIR_SESSION="$TE_LOG_DIR/s0001/"
+TE_LOG_DIR="$TE_BASE/users/teamengine/"
+#TE_LOG_DIR_SESSION="$TE_LOG_DIR/s0001/"
 TE_FORMS_DIR="$TE_BASE/forms"
 
 mkdir -p "$TE_FORMS_DIR"
@@ -23,55 +23,16 @@ _show_logs() {
     -session=s0001
 }
 
-#_parse_logs(){
-#  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -w "Failed"
-##  grep -riv "Failed" $TE_LOG_DIR_SESSION
-#  local grep_exit_code=$?
-#  if [ "$grep_exit_code" -eq "0" ]; then
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      return 3
-#  else
-#      echo "No Failed tests found in logs" >&2
-#      return 0
-#  fi
-#}
-#_parse_logs(){
-#  ./viewlog.sh -logdir="$TE_LOG_DIR" -session=s0001 | grep -e "Failed"
-##  grep -riv "Failed" $TE_LOG_DIR_SESSION
-#  local grep_exit_code=$?
-#  if [ "$grep_exit_code" -eq "0" ]; then
-#      echo "No Failed tests found in logs" >&2
-#      return 0
-#  else
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      return 3
-#  fi
-#}
-
-_check_log () {
-  ./viewlog.sh -logdir=$TE_LOG_DIR -session=s0001 | grep -w "Failed" | wc -l
-}
 _parse_logs(){
-#  ./viewlog.sh -logdir=$TE_LOG_DIR -session=s0001 | grep -w "Failed" | wc -l
-#set -v
-#set -x
-#  grep -rw "Failed" $TE_LOG_DIR_SESSION
-#  ./viewlog.sh -logdir=$TE_LOG_DIR/ -session=s0001 > test.logs
-#  grep -w "Failed" test.logs
-  local check_log=_check_log
+  _show_logs | grep -w "Failed"
   local grep_exit_code=$?
-#  echo $grep_exit_code
-   echo $check_log
-#  if [ "$grep_exit_code" -eq "0" ]; then
-  if [ $check_log -gt "0" ]; then
-      echo "$check_log failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+  if [ "$grep_exit_code" -eq "0" ]; then
+      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
   else
       echo "No Failed tests found in logs" >&2
       return 0
   fi
-#set +v
-#set +x
 }
 
 _run() {
@@ -87,20 +48,15 @@ _run() {
 echo $rc
 
   _show_logs
-#  if [ "$?" -ne "0" ]; then
   if [ "$rc" -ne "0" ]; then
       echo "viewlog.sh failed, I cannot tell if the tests failed or not." >&2
       return 20
   fi
-
-#set -x
-#set -v
 echo $rc
 
 echo "Parsing the logs"
-set -x
+#set -x
   _parse_logs
-
   if [ "$rc" -ne "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
