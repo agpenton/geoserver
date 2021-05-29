@@ -2,11 +2,8 @@
 
 # fail on error
 set -e
-#set -x
-#set -v
 
-TE_LOG_DIR="$TE_BASE/users/teamengine/"
-#TE_LOG_DIR_SESSION="$TE_LOG_DIR/s0001/"
+TE_LOG_DIR="$TE_BASE/users/teamengine"
 TE_FORMS_DIR="$TE_BASE/forms"
 
 mkdir -p "$TE_FORMS_DIR"
@@ -24,15 +21,11 @@ _show_logs() {
 }
 
 _parse_logs(){
-  _show_logs | grep -w "Failed"
-#  _show_logs | grep -iv "Failed"
+  _show_logs | grep -iv "Passed"
   local grep_exit_code=$?
-  if [ "$grep_exit_code" -eq 0 ]; then
+  if [ "$grep_exit_code" -ne "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
       return 3
-  elif [ "$grep_exit_code" -eq 1 ]; then
-      echo "No Failed tests found in logs" >&2
-      return 0
   else
       echo "No Failed tests found in logs" >&2
       return 0
@@ -49,25 +42,18 @@ _run() {
       rc=10
   fi
 
-echo $rc
-
   _show_logs
-  if [ "$rc" -ne "0" ]; then
+  if [ "$?" -ne "0" ]; then
       echo "viewlog.sh failed, I cannot tell if the tests failed or not." >&2
       return 20
   fi
 
-echo $rc
-
-echo "Parsing the logs"
-#set -x
   _parse_logs
-  if [ "$rc" -ne "0" ]; then
+  if [ "$?" -ne "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
   fi
 
-  echo $rc
   return $rc
 }
 
