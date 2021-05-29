@@ -52,12 +52,12 @@ _run() {
   fi
 
 #  _parse_logs
-  if [ "$(_parse_logs)" -ne "0" ]; then
-      echo "The log shows a failed test!" >&2
-      rc=3
-  else
+  if [ "$(_parse_logs)" == 0 ]; then
       echo "No Failed tests found in logs" >&2
       rc=0
+  else
+      echo "The log shows a failed test!" >&2
+      rc=3
   fi
 
   return $rc
