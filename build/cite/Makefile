@@ -34,11 +34,6 @@ test: $(suite) | version		## Will running the Suite test with teamengine.
 		docker-compose -f docker-compose.yml -f ./$(suite)/docker-compose.override.yml \
       up --force-recreate --exit-code-from teamengine teamengine
 
-testci: $(suite) | version		## Will running the Suite test with teamengine.
-		@echo running the Suite test with teamengine
-		docker-compose -f docker-compose.yml -f ./$(suite)/docker-compose.override.yml \
-      up --force-recreate teamengine teamengine
-
 webUI:		## Will running the Suite test with teamengine.
 	@echo running the Suite test with teamengine webUI
 	docker-compose -f docker-compose.yml -f ./interactive/docker-compose.override.yml \
