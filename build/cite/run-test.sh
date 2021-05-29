@@ -52,6 +52,9 @@ _run() {
   if [ "$?" -ne "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
+  else
+      echo "No Failed tests found in logs" >&2
+      rc=0
   fi
 
   return $rc
