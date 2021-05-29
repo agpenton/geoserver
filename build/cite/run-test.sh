@@ -26,12 +26,12 @@ _parse_logs(){
 #  if [ "$grep_exit_code" -ne "0" ]; then
   if [ "$(_show_logs | grep -iq "Failed")" == 0 ]; then
       grep_exit_code=$?
-      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
-      return 0
+      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+      return 42
   else
       grep_exit_code=$?
-      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-      return 3
+      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
+      return 0
   fi
 }
 
@@ -51,8 +51,8 @@ _run() {
       return 20
   fi
 
-  _parse_logs
-  if [ "$?" -ne "0" ]; then
+#  _parse_logs
+  if [ "$(_parse_logs)" -ne "0" ]; then
       echo "The log shows a failed test!" >&2
       rc=3
   else
