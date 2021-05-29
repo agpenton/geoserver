@@ -26,19 +26,21 @@ _parse_logs(){
 #  if [ "$grep_exit_code" -ne "0" ]; then
 #  if [ "$(_show_logs | grep -e "Failed")" != "0" ]; then
 #  _show_logs | grep -w "Failed" && echo "Failed tests found" exit 1 || echo "No Failed tests found in logs" exit 0
-  if [ "$(`_show_logs` | grep -w "Failed")" = "0" ]; then
+  if [ "$(`_show_logs` | grep -w "Failed")" != "0" ]; then
 #  if [ "$(grep -w "Failed" `_show_logs`)" = "0" ]; then
       grep_exit_code=$?
-      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
+#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
 #      return 0
-      exit 3
+      exit 0
+#      exit 3
   else
       grep_exit_code=$?
-      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+#      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
+      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
 #      return 42
-      exit 0
+#      exit 0
+      exit 3
   fi
 }
 
