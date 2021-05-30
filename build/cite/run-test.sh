@@ -20,28 +20,40 @@ _show_logs() {
     -session=s0001
 }
 
-_parse_logs(){
-  _show_logs | grep -iwq "Failed"
-  local grep_exit_code=$?
-  if [ "$grep_exit_code" -ne "0" ]; then
-#  if [ "$(_show_logs | grep -e "Failed")" != "0" ]; then
-#  _show_logs | grep -w "Failed" && echo "Failed tests found" exit 1 || echo "No Failed tests found in logs" exit 0
-  # shellcheck disable=SC2092
-#  if [ $(_show_logs | grep -i -w "Failed") != "0" ]; then
-#  if [ $(grep -w "Failed" _show_logs) = "0" ]; then
-#      grep_exit_code=$?
-#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
-#      return 0
-      exit 0
-#      exit 3
-  else
-#      grep_exit_code=$?
+#_parse_logs(){
+#  _show_logs | grep -iwq "Failed"
+#  local grep_exit_code=$?
+#  if [ "$grep_exit_code" -ne "0" ]; then
+##  if [ "$(_show_logs | grep -e "Failed")" != "0" ]; then
+##  _show_logs | grep -w "Failed" && echo "Failed tests found" exit 1 || echo "No Failed tests found in logs" exit 0
+#  # shellcheck disable=SC2092
+##  if [ $(_show_logs | grep -i -w "Failed") != "0" ]; then
+##  if [ $(grep -w "Failed" _show_logs) = "0" ]; then
+##      grep_exit_code=$?
+##      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
 #      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
-      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
-#      return 42
+##      return 0
 #      exit 0
-      exit 3
+##      exit 3
+#  else
+##      grep_exit_code=$?
+##      echo "No Failed tests found in logs!  (grep exit code: $grep_exit_code)" >&2
+#      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+##      return 42
+##      exit 0
+#      exit 3
+#  fi
+#}
+
+_parse_logs(){
+  _show_logs | grep -iv "Failed"
+  local grep_exit_code=$?
+  if [ "$grep_exit_code" -eq "0" ]; then
+      echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
+      return 3
+  else
+      echo "No Failed tests found in logs" >&2
+      return 0
   fi
 }
 
@@ -62,6 +74,10 @@ _run() {
   fi
 
   _parse_logs
+  if [ "$?" -ne "0" ]; then
+      echo "The log shows a failed test!" >&2
+      rc=3
+  fi
 #  if [ "$(_parse_logs)" == 0 ]; then
 #      echo "No Failed tests found in logs" >&2
 #      rc=0
