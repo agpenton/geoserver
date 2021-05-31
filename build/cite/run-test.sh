@@ -57,6 +57,7 @@ _parse_logs(){
   fi
 }
 
+set -o pipefail
 _run() {
   ./test.sh \
     -source="$source" \
@@ -88,6 +89,7 @@ _run() {
 
   return $rc
 }
+set +o pipefail
 
 wms11 () {
   echo $0
