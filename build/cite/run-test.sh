@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # fail on error
-set -e
+#set -e
 
 TE_LOG_DIR="$TE_BASE/users/teamengine"
 TE_FORMS_DIR="$TE_BASE/forms"
@@ -58,7 +58,7 @@ _parse_logs(){
       return 0
   fi
 }
-set +o pipefail
+#set +o pipefail
 #set -o pipefail
 _run() {
   ./test.sh \
@@ -91,7 +91,7 @@ _run() {
 
   return $rc
 }
-#set +o pipefail
+set +o pipefail
 
 wms11 () {
   echo $0
