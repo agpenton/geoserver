@@ -44,10 +44,11 @@ _show_logs() {
 #      exit 3
 #  fi
 #}
-
+set -o pipefail
 _parse_logs(){
   # shellcheck disable=SC1054
   _show_logs | grep -iw "Failed"
+
   local grep_exit_code=$?
   if [ "$grep_exit_code" -eq "0" ]; then
       echo "Failed tests found in logs! (grep exit code: $grep_exit_code)" >&2
@@ -57,8 +58,8 @@ _parse_logs(){
       return 0
   fi
 }
-
-set -o pipefail
+set +o pipefail
+#set -o pipefail
 _run() {
   ./test.sh \
     -source="$source" \
@@ -90,7 +91,7 @@ _run() {
 
   return $rc
 }
-set +o pipefail
+#set +o pipefail
 
 wms11 () {
   echo $0
